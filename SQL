@@ -1,0 +1,88 @@
+-- ============================================================
+-- 01_create_tables.sql
+-- HR Attrition Analytics — Schema Definition
+-- Dataset: IBM HR Analytics (Kaggle)
+-- ============================================================
+ 
+-- Drop table if re-running
+DROP TABLE IF EXISTS employees;
+ 
+-- ============================================================
+-- MAIN EMPLOYEES TABLE
+-- ============================================================
+CREATE TABLE employees (
+    -- Identifiers
+    employee_id             INTEGER PRIMARY KEY,
+ 
+    -- Demographics
+    age                     INTEGER,
+    gender                  TEXT,
+    marital_status          TEXT,        -- 'Single', 'Married', 'Divorced'
+    education               INTEGER,     -- 1=Below College, 2=College, 3=Bachelor, 4=Master, 5=Doctor
+    education_field         TEXT,        -- 'Life Sciences', 'Medical', 'Marketing', etc.
+    distance_from_home      INTEGER,     -- in km
+ 
+    -- Job Info
+    department              TEXT,        -- 'Sales', 'Research & Development', 'Human Resources'
+    job_role                TEXT,        -- 'Sales Executive', 'Research Scientist', etc.
+    job_level               INTEGER,     -- 1 (entry) to 5 (executive)
+    business_travel         TEXT,        -- 'Non-Travel', 'Travel_Rarely', 'Travel_Frequently'
+    over_time               TEXT,        -- 'Yes' / 'No'
+ 
+    -- Compensation
+    monthly_income          INTEGER,     -- in USD
+    hourly_rate             INTEGER,
+    daily_rate              INTEGER,
+    monthly_rate            INTEGER,
+    percent_salary_hike     INTEGER,     -- last appraisal % hike
+    stock_option_level      INTEGER,     -- 0 to 3
+ 
+    -- Tenure & Experience
+    total_working_years     INTEGER,
+    years_at_company        INTEGER,
+    years_in_current_role   INTEGER,
+    years_since_last_promo  INTEGER,
+    years_with_curr_manager INTEGER,
+    num_companies_worked    INTEGER,
+ 
+    -- Satisfaction Scores (scale 1–4)
+    job_satisfaction        INTEGER,     -- 1=Low, 2=Medium, 3=High, 4=Very High
+    environment_satisfaction INTEGER,
+    relationship_satisfaction INTEGER,
+    work_life_balance       INTEGER,
+ 
+    -- Performance
+    job_involvement         INTEGER,     -- 1=Low to 4=Very High
+    performance_rating      INTEGER,     -- 1=Low, 2=Good, 3=Excellent, 4=Outstanding
+    training_times_last_year INTEGER,
+ 
+    -- Target Variable
+    attrition               TEXT         -- 'Yes' / 'No'
+);
+ 
+-- ============================================================
+-- OPTIONAL: LOOKUP TABLES FOR CLEAN JOINS
+-- ============================================================
+ 
+DROP TABLE IF EXISTS education_levels;
+CREATE TABLE education_levels (
+    education_id    INTEGER PRIMARY KEY,
+    education_label TEXT
+);
+INSERT INTO education_levels VALUES
+    (1, 'Below College'),
+    (2, 'College'),
+    (3, 'Bachelor'),
+    (4, 'Master'),
+    (5, 'Doctor');
+ 
+DROP TABLE IF EXISTS satisfaction_levels;
+CREATE TABLE satisfaction_levels (
+    level_id    INTEGER PRIMARY KEY,
+    level_label TEXT
+);
+INSERT INTO satisfaction_levels VALUES
+    (1, 'Low'),
+    (2, 'Medium'),
+    (3, 'High'),
+    (4, 'Very High');
